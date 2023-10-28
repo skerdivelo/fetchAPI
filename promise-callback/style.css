@@ -1,42 +1,33 @@
+/* Set up some basic styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
-}
-
-.menu, .order {
-    margin: 20px 0;
-}
-
-#menu-list{
-    cursor: pointer;
-}
-
-#menu-list li {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-}
-
-#menu-list li:hover {
-    background-color: lightblue;
-    width: 23%;
-    border-radius: 5px;
+    font-size: 3rem;
+    margin-bottom: 30px;
 }
 
 h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
     border-bottom: 2px solid #333;
+}
+
+/* Style the menu and order lists */
+.menu, .order {
+    margin: 20px 0;
 }
 
 ul {
@@ -48,8 +39,36 @@ li {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
 }
 
+li:last-child {
+    border-bottom: none;
+}
+
+/* Style the menu list */
+#menu-list {
+    cursor: pointer;
+}
+
+#menu-list li {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+#menu-list li:hover {
+    background-color: #f5f5f5;
+
+}
+
+/* Style the "Place Order" button */
 button {
     display: block;
     margin: 20px auto;
@@ -59,8 +78,18 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease-in-out;
 }
 
 button:hover {
     background-color: #ff291f;
+}
+
+/* Add a beautiful background */
+body {
+    background-image: url('https://images.squarespace-cdn.com/content/v1/52f93320e4b060ae5a8123be/1401405122569-4UVTTQAYYFYBBSD9EZ2J/Pinterest+Roundup%3A+Pizza%21+Pizza%21+%7C+SavoryPantryBlog.com');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

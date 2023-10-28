@@ -1,68 +1,68 @@
-// Sample menu items
-const menuItems = [
-    { name: "Margherita", price: 10 },
-    { name: "Pepperoni", price: 12 },
-    { name: "Vegetariana", price: 11 },
-    { name: "Piccante", price: 14 },
-    { name: "Marinara", price: 13 }
+// Esempi di elementi del menu
+const m = [
+    { n: "Margherita", p: 10, i: ["Salsa di pomodoro", "Mozzarella", "Basilico"] },
+    { n: "Pepperoni", p: 12, i: ["Salsa di pomodoro", "Mozzarella", "Peperoni"] },
+    { n: "Vegetariana", p: 11, i: ["Salsa di pomodoro", "Mozzarella", "Funghi", "Peperoni", "Cipolle"] },
+    { n: "Piccante", p: 14, i: ["Salsa di pomodoro", "Mozzarella", "Salame piccante", "Peperoncini"] },
+    { n: "Marinara", p: 13, i: ["Salsa di pomodoro", "Aglio", "Origano", "Basilico"] }
 ];
 
-// Initialize menu and order lists
-const menuList = document.getElementById("menu-list");
-const orderList = document.getElementById("order-list");
-const placeOrderBtn = document.getElementById("place-order-btn");
+// Inizializza le liste del menu e dell'ordine
+const l = document.getElementById("menu-list");
+const o = document.getElementById("order-list");
+const b = document.getElementById("place-order-btn");
 
-// Populate the menu
-menuItems.forEach(item => {
-    const menuItem = document.createElement("li");
-    menuItem.innerHTML = `${item.name} - $${item.price}`;
-    menuList.appendChild(menuItem);
+// Popola il menu
+m.forEach(i => {
+    const mi = document.createElement("li");
+    mi.innerHTML = `${i.n} - $${i.p} - ${i.i.join(", ")}`; // Aggiungi gli ingredienti all'elemento del menu
+    l.appendChild(mi);
 
-    // Add click event for adding items to the order
-    menuItem.addEventListener("click", () => {
-        addToOrder(item);
+    // Aggiungi l'evento di clic per aggiungere gli elementi all'ordine
+    mi.addEventListener("click", () => {
+        ao(i);
     });
 });
 
-// Initialize order array
-const order = [];
+// Inizializza l'array dell'ordine
+const or = [];
 
-// Add click event for placing an order
-placeOrderBtn.addEventListener("click", () => {
-    if (order.length > 0) {
-        placeOrder(order)
+// Aggiungi l'evento di clic per effettuare un ordine
+b.addEventListener("click", () => {
+    if (or.length > 0) {
+        po(or)
             .then(() => {
-                alert("Order placed successfully!");
-                clearOrder();
+                alert("Ordine effettuato con successo!");
+                co();
             })
-            .catch((error) => {
-                alert(`Error placing order: ${error.message}`);
+            .catch((e) => {
+                alert(`Errore durante l'effettuazione dell'ordine: ${e.message}`);
             });
     } else {
-        alert("Please add items to your order.");
+        alert("Si prega di aggiungere elementi all'ordine.");
     }
 });
 
-function addToOrder(item) {
-    order.push(item);
-    const orderItem = document.createElement("li");
-    orderItem.innerHTML = `${item.name} - $${item.price}`;
-    orderList.appendChild(orderItem);
+function ao(i) {
+    or.push(i);
+    const oi = document.createElement("li");
+    oi.innerHTML = `${i.n} - $${i.p}`;
+    o.appendChild(oi);
 }
 
-function placeOrder(order) {
-    return new Promise((resolve, reject) => {
-        // Simulate an order being placed, you can add your logic here
+function po(or) {
+    return new Promise((r, rej) => {
+        // Simula l'effettuazione di un ordine, puoi aggiungere la tua logica qui
         setTimeout(() => {
             if (Math.random() > 0.5) {
-                resolve();
+                r();
             } else {
-                reject(new Error("Something went wrong"));
+                rej(new Error("Qualcosa è andato storto"));
             }
         }, 1000);
     });
 }
 
-function clearOrder() {
-    orderList.innerHTML = "";
+function co() {
+    o.innerHTML = "";
 }
