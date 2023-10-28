@@ -30,7 +30,14 @@ const order = [];
 // Add click event for placing an order
 placeOrderBtn.addEventListener("click", () => {
     if (order.length > 0) {
-        placeOrder(order);
+        placeOrder(order)
+            .then(() => {
+                alert("Order placed successfully!");
+                clearOrder();
+            })
+            .catch((error) => {
+                alert(`Error placing order: ${error.message}`);
+            });
     } else {
         alert("Please add items to your order.");
     }
@@ -44,10 +51,16 @@ function addToOrder(item) {
 }
 
 function placeOrder(order) {
-    // Simulate an order being placed, you can add your logic here
-    alert("Order placed successfully!");
-    console.log(order);
-    clearOrder();
+    return new Promise((resolve, reject) => {
+        // Simulate an order being placed, you can add your logic here
+        setTimeout(() => {
+            if (Math.random() > 0.5) {
+                resolve();
+            } else {
+                reject(new Error("Something went wrong"));
+            }
+        }, 1000);
+    });
 }
 
 function clearOrder() {
