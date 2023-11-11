@@ -4,6 +4,6 @@ class Tile {
     }
 
     getNum() {
-        return this.idx + 1;
+        return this.idx !== -1 ? this.idx + 1:"";
     }
 }

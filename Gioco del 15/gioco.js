@@ -9,14 +9,16 @@ canvas.width = W;
 canvas.height = H;
 
 const drawText = (txt, x, y) => {
-    ctx.font = '48px serif';
+    ctx.font = "48px serif";
     ctx.fillText(txt, x, y);
 };
 
 const shuffle = (arr) => {
-    let i = 0,j = 0, tmp = null;
-    for (i = arr.length - 1; i>0;i--){
-        j = Math.floor(Math.random() * (i+1));
+    let i = 0,
+        j = 0,
+        tmp = null;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
         tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
@@ -32,12 +34,14 @@ const swap = (arr, i, j) => {
 
 const tiles = [];
 const tilespos = [];
-const emptyPos = 15;
+let emptyPos = 15;
 for (let i = 0; i < 15; i++) {
     tiles.push(new Tile(i));
     tilespos.push(i);
 }
 
+tiles.push(new Tile(-1));
+tilespos.push(15);
 shuffle(tilespos);
 swap(tilespos, 0, 1);
 
@@ -48,8 +52,13 @@ const idxToCoords = (idx) => {
 const show = () => {
     ctx.clearRect(0, 0, W, H);
     tilespos.forEach((tilepos, idx) => {
+        if (tilepos === 15) return;
         const { r, c } = idxToCoords(idx);
-        drawText(tiles[tilepos].getNum(), c+0.5*TILE_SIZE, r+0.5*TILE_SIZE);
+        drawText(
+            tiles[tilepos].getNum(),
+            c + 0.5 * TILE_SIZE,
+            r + 0.5 * TILE_SIZE
+        );
     });
 
     requestAnimationFrame(show);
@@ -57,112 +66,27 @@ const show = () => {
 
 show();
 
-const moves = [
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
+const moves2 = {
+    ArrowLeft: (ep) => {
+        if (ep % 4 === 3) return;
+        swap(tilespos, ep, ep + 1);
     },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
+    ArrowRight: () => {
+        if (ep % 4 === 0) return;
+        swap(tilespos, ep-1, ep);
     },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
+    ArrowUp: () => {
+        if (Math.floor(ep / 4) === 3) return;
+        swap(tilespos, ep-4, ep);
     },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
+    ArrowDown: () => {
+        if (Math.floor(ep / 4) === 0) return;
+        swap(tilespos, ep+4, ep);
     },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-    {
-        ArrowLeft: () => {},
-        ArrowUp: () => {},
-        ArrowDown: () => {},
-        ArrowRight: () => {}
-    },
-
-];
+};
 
 document.body.onkeydown = (e) => {
-    if(e.code === "ArrowLeft"){
-        console.log("left");
-    }else if(e.code === "ArrowRight"){
-        console.log("right");
-    }else if(e.code === "ArrowUp"){
-        console.log("up");
-    }else if(e.code === "ArrowDown"){
-        /* switch (emptyPos) {
-            case 1: 
-                break;
-        } */
-        moves[emptyPos][e.code]();
-    }
-}
+    emptyPos = tilespos.indexOf(15);
+    console.log("Empty" + emptyPos);
+    moves[emptyPos][e.code]();
+};
