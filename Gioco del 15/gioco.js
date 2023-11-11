@@ -54,11 +54,15 @@ const show = () => {
     tilespos.forEach((tilepos, idx) => {
         if (tilepos === 15) return;
         const { r, c } = idxToCoords(idx);
-        drawText(
-            tiles[tilepos].getNum(),
-            c + 0.5 * TILE_SIZE,
-            r + 0.5 * TILE_SIZE
-        );
+        if (tiles[tilepos] !== undefined) {
+            drawText(
+                tiles[tilepos].getNum(),
+                c + 0.5 * TILE_SIZE,
+                r + 0.5 * TILE_SIZE
+            );
+        } else {
+            console.error(`La tessera alla posizione ${tilepos} è indefinita.`);
+        }
     });
 
     requestAnimationFrame(show);
@@ -66,27 +70,27 @@ const show = () => {
 
 show();
 
-const moves2 = {
+const moves = {
     ArrowLeft: (ep) => {
         if (ep % 4 === 3) return;
         swap(tilespos, ep, ep + 1);
     },
-    ArrowRight: () => {
+    ArrowRight: (ep) => {
         if (ep % 4 === 0) return;
-        swap(tilespos, ep-1, ep);
+        swap(tilespos, ep - 1, ep);
     },
-    ArrowUp: () => {
+    ArrowUp: (ep) => {
         if (Math.floor(ep / 4) === 3) return;
-        swap(tilespos, ep-4, ep);
+        swap(tilespos, ep - 4, ep);
     },
-    ArrowDown: () => {
+    ArrowDown: (ep) => {
         if (Math.floor(ep / 4) === 0) return;
-        swap(tilespos, ep+4, ep);
+        swap(tilespos, ep + 4, ep);
     },
 };
 
 document.body.onkeydown = (e) => {
     emptyPos = tilespos.indexOf(15);
     console.log("Empty" + emptyPos);
-    moves[emptyPos][e.code]();
+    moves[e.code](emptyPos);
 };
